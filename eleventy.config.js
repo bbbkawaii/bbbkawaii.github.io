@@ -147,9 +147,9 @@ export default async function(eleventyConfig) {
 
 		// These are all optional:
 		dir: {
-			input: "content",   // 你的所有文章/模板现在都在 content/ 下
-			includes: "_includes",
-			data: "_data",
+			input: "content",
+			includes: "../_includes", // ← 在 input=content 的前提下回到根目录
+			data: "../_data",         // ← 同理
 			output: "_site"
 		},
 
