@@ -1,5 +1,5 @@
 export default {
-	title: "离子芥",
+	title: "芥",
 	url: "https://example.com/",
 	language: "en",
 	description: "I am writing about my experiences as a naval navel-gazer.",
