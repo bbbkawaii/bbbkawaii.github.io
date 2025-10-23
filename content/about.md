@@ -8,5 +8,6 @@ const eleventyNavigation = {
 
 美食家
 
-- [X](https://x.com/cprarar)
-- [Telegram Channel](https://t.me/whentoretire)
+[X](https://x.com/cprarar)
+
+[Telegram Channel](https://t.me/whentoretire)
