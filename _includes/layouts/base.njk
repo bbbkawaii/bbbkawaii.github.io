@@ -10,7 +10,6 @@
                 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
                 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-                <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400..600,0..1,-50..200" rel="stylesheet">
 
 		{#- Uncomment this if you’d like folks to know that you used Eleventy to build your site!  #}
 		{#- <meta name="generator" content="{{ eleventy.generator }}"> #}
@@ -49,7 +48,6 @@
 
                 <header>
                         <a href="/" class="home-link">
-                                <span class="material-symbols-rounded home-link-icon" aria-hidden="true">auto_awesome</span>
                                 <span class="home-link-label">{{ metadata.title }}</span>
                         </a>
 
@@ -70,13 +68,7 @@
 			</heading-anchors>
 		</main>
 
-		<footer>
-			<p>
-				<em>Built with <a href="https://www.11ty.dev/">{{ eleventy.generator }}</a></em>
-			</p>
-		</footer>
-
-		<!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->
-		<script type="module" src="{% getBundleFileUrl "js" %}"></script>
+                <!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->
+                <script type="module" src="{% getBundleFileUrl "js" %}"></script>
 	</body>
 </html>
