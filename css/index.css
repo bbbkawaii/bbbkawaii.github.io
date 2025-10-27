@@ -571,6 +571,7 @@ nav {
 }
 
 .theme-toggle {
+        position: relative;
         display: grid;
         place-items: center;
         width: 2.75rem;
@@ -598,6 +599,9 @@ nav {
 }
 
 .theme-toggle__icon {
+        position: absolute;
+        inset: 0;
+        margin: auto;
         width: 1.35rem;
         height: 1.35rem;
         transition: opacity 0.3s ease, transform 0.3s ease;
