@@ -1,18 +1,16 @@
-/* Message Box */
+/* Message Box aligned with Material You tokens */
 .message-box {
-	--color-message-box: #ffc;
-
-	display: block;
-	background-color: var(--color-message-box);
-	color: var(--color-gray-90);
-	padding: 1em 0.625em; /* 16px 10px /16 */
-}
-.message-box ol {
-	margin-top: 0;
+        display: block;
+        background-color: var(--md-sys-color-tertiary-container);
+        color: var(--md-sys-color-on-tertiary-container);
+        padding: 1.25rem 1.5rem;
+        border-radius: var(--md-sys-shape-corner-large);
+        box-shadow: var(--md-elevation-level1);
+        margin-block: 1.5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-	.message-box {
-		--color-message-box: #082840;
-	}
+.message-box ol,
+.message-box ul {
+        margin-top: 0;
+        padding-left: 1.5rem;
 }
