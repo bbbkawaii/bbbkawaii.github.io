@@ -475,11 +475,6 @@ a[href]:focus-visible {
         transform: translateY(1px);
 }
 
-.home-link-icon {
-        font-size: 1.75rem;
-        color: var(--md-sys-color-primary);
-}
-
 .home-link-label {
         white-space: nowrap;
 }
