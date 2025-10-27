@@ -46,21 +46,42 @@
 	<body>
 		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
 
-                <header>
-                        <a href="/" class="home-link">
-                                <span class="home-link-label">{{ metadata.title }}</span>
-                        </a>
+               <header>
+                       <a href="/" class="home-link">
+                               <span class="home-link-label">{{ metadata.title }}</span>
+                       </a>
 
-                        {#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
-                        <nav aria-label="Primary">
-                                <h2 class="visually-hidden">Top level navigation menu</h2>
-                                <ul class="nav">
-				{%- for entry in collections.all | eleventyNavigation %}
-					<li class="nav-item"><a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.title }}</a></li>
-				{%- endfor %}
-				</ul>
-			</nav>
-		</header>
+                       <div class="header-actions">
+                               {#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
+                               <nav aria-label="Primary">
+                                       <h2 class="visually-hidden">Top level navigation menu</h2>
+                                       <ul class="nav">
+                                       {%- for entry in collections.all | eleventyNavigation %}
+                                               <li class="nav-item"><a href="{{ entry.url }}"{% if entry.url == page.url %} aria-current="page"{% endif %}>{{ entry.title }}</a></li>
+                                       {%- endfor %}
+                                       </ul>
+                               </nav>
+
+                               <button class="theme-toggle" type="button" data-color-scheme-toggle aria-label="切换亮色与暗色模式">
+                                       <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" aria-hidden="true">
+                                               <circle cx="12" cy="12" r="4.5" fill="currentColor"></circle>
+                                               <g stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                                                       <line x1="12" y1="2.5" x2="12" y2="5"></line>
+                                                       <line x1="12" y1="19" x2="12" y2="21.5"></line>
+                                                       <line x1="4.5" y1="12" x2="7" y2="12"></line>
+                                                       <line x1="17" y1="12" x2="19.5" y2="12"></line>
+                                                       <line x1="5.9" y1="5.9" x2="7.7" y2="7.7"></line>
+                                                       <line x1="16.3" y1="16.3" x2="18.1" y2="18.1"></line>
+                                                       <line x1="5.9" y1="18.1" x2="7.7" y2="16.3"></line>
+                                                       <line x1="16.3" y1="7.7" x2="18.1" y2="5.9"></line>
+                                               </g>
+                                       </svg>
+                                       <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true">
+                                               <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z" fill="currentColor"></path>
+                                       </svg>
+                               </button>
+                       </div>
+               </header>
 
 		<main id="main">
 			<heading-anchors>
@@ -68,7 +89,65 @@
 			</heading-anchors>
 		</main>
 
-                <!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->
-                <script type="module" src="{% getBundleFileUrl "js" %}"></script>
+               <!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->
+               <script>
+               (function () {
+                       const storageKey = "site-color-scheme";
+                       const root = document.documentElement;
+                       const toggle = document.querySelector("[data-color-scheme-toggle]");
+
+                       if (!toggle) {
+                               return;
+                       }
+
+                       const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+                       const systemTheme = () => (mediaQuery.matches ? "dark" : "light");
+
+                       const updateButton = (theme) => {
+                               toggle.dataset.theme = theme;
+                       };
+
+                       let storedTheme = null;
+                       try {
+                               storedTheme = localStorage.getItem(storageKey);
+                       } catch (error) {
+                               storedTheme = null;
+                       }
+
+                       if (storedTheme === "dark" || storedTheme === "light") {
+                               root.dataset.theme = storedTheme;
+                               updateButton(storedTheme);
+                       } else {
+                               root.removeAttribute("data-theme");
+                               updateButton(systemTheme());
+                       }
+
+                       const handleSystemChange = (event) => {
+                               if (!root.dataset.theme) {
+                                       updateButton(event.matches ? "dark" : "light");
+                               }
+                       };
+
+                       if (typeof mediaQuery.addEventListener === "function") {
+                               mediaQuery.addEventListener("change", handleSystemChange);
+                       } else if (typeof mediaQuery.addListener === "function") {
+                               mediaQuery.addListener(handleSystemChange);
+                       }
+
+                       toggle.addEventListener("click", () => {
+                               const current = root.dataset.theme || systemTheme();
+                               const next = current === "dark" ? "light" : "dark";
+                               root.dataset.theme = next;
+                               updateButton(next);
+
+                               try {
+                                       localStorage.setItem(storageKey, next);
+                               } catch (error) {
+                                       /* noop */
+                               }
+                       });
+               })();
+               </script>
+               <script type="module" src="{% getBundleFileUrl "js" %}"></script>
 	</body>
 </html>
